@@ -7,8 +7,14 @@ const userSchema = Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   role: { type: String, default: "user" },
+  technology: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "technology",
+    },
+  ],
 });
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model("user", userSchema);
 
 module.exports = User;

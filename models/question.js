@@ -9,6 +9,6 @@ const questionSchema = mongoose.Schema({
   timesFaved: { type: Number, default: 0 },
 });
 
-const Question = mongoose.model("Question", questionSchema);
+const Question = mongoose.model("question", questionSchema);
 
 module.exports = Question;
