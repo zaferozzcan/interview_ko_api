@@ -9,8 +9,20 @@ const userSchema = Schema({
   role: { type: String, default: "user" },
   technology: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "technology",
+      name: { type: String, required: true, unique: true },
+      area: { type: String, required: true },
+      description: { type: String },
+      timesClicked: { type: Number, default: 0 },
+      questions: [
+        {
+          question: { type: String, min: 4, required: true, unique: true },
+          answer: { type: String, required: true },
+          tech: { type: String, required: true },
+          level: { type: String, required: true },
+          source: { type: String },
+          timesFaved: { type: Number, default: 0 },
+        },
+      ],
     },
   ],
 });
