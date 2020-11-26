@@ -1,13 +1,27 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 const PORT = process.env.PORT;
 const app = express();
 
+// CORS
+const whitelist = ["http://localhost:3040", "http://localhost:3000"];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
+
 // middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors(corsOptions));
 
 // database
 const db = mongoose.connection;
@@ -27,10 +41,6 @@ mongoose.connect(
 // database error checks
 db.on("error", (err) => console.log(err.message + " is mongod not running?"));
 db.on("disconnected", () => console.log("mongo disconnected"));
-
-app.get("/", (req, res) => {
-  res.send("hello world");
-});
 
 // controllers
 const technology_controller = require("./controllers/technology_controller");
