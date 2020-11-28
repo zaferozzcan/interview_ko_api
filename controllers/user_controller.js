@@ -40,8 +40,14 @@ userRouter.post("/login", (req, res) => {
     } else {
       if (data) {
         console.log(data);
-        if (bcrypt.compareSync(req.body.password, loggingUser.password)) {
-          res.send("success");
+        if (bcrypt.compareSync(req.body.password, user.password)) {
+          res.status(200).json("Success");
+          const token = jwt.sign({ id: user._id }, process.env.TOKEN_SECRET);
+          res.send({
+            token: token,
+            user: { id: user._id, name: user.name },
+          });
+          // create token
         } else {
           res.send("passport did not match");
         }
