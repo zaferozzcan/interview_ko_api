@@ -4,6 +4,16 @@ const Subject = require("../models/subjectModel");
 
 const subjectRouter = express.Router();
 
+subjectRouter.get("/all-subjects", (req, res) => {
+  Subject.find({}, (err, data) => {
+    if (!err) {
+      return res.status(200).json(data);
+    } else {
+      res.status(400).json();
+    }
+  });
+});
+
 subjectRouter.get("/:id", (req, res) => {
   Subject.findOne({ userId: req.params.id }, (err, data) => {
     if (!err) {
